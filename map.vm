@@ -1,0 +1,58 @@
+title CICD Pipelines Industrialization
+
+style wardley
+
+annotation 1 [ [.85, 0.60] ] Standardizing Pipeline allows faster Feature Development
+annotation 2 [.65, 0.80]Build runner is a commodity - obvious and well known
+annotations [0.85, 0.02]
+
+component Developer [0.97, 0.45] 
+component Application Source Code [0.95, 0.3] (build) label [-100, -20]
+Developer -> Application Source Code
+
+component Feature Development [.95, 0.60] (build) label [30, -10]
+component Code Reviews [.90, 0.85] (build) label [30, 1]
+component Unit tests [.85, 0.85] (build) label [30, -1]
+component Integration tests [.80, 0.85] (build) label [40, -10]
+
+//
+Feature Development -> Code Reviews
+Feature Development -> Unit tests
+Feature Development -> Integration tests
+
+Developer->Code
+Developer->Feature Development
+Developer->Merge Requests and Code Reviews
+
+component Pipeline [.85, 0.55] (buy)
+Developer->Pipeline
+
+component Deployment [0.45, 0.7] (buy)
+component Secret Storage [0.75, 0.75] (buy)
+component Build Runner [.65, 0.74] (buy)
+Pipeline -> Build Runner
+Pipeline -> Deployment
+
+//Evolve
+//pipeline Build Runner [0.15, 0.75]
+//pipeline Deployment [0.25, 0.70]
+
+Pipeline->Secret Storage
+Secret Storage -> Platform
+
+component Platform [0.35, 0.55] (buy)
+Web Site->Platform 
+
+component Compute [0.30, 0.85] (buy)
+Platform->Compute
+
+Deployment -> Platform
+
+component Data Centre [0.15, 0.58] (buy)
+Compute->Data Centre
+CRM->Compute
+
+component Power [0.1, 0.9] (outsource)
+Data Centre->Power
+Compute->Power 
+
